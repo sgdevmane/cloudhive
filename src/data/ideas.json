@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "summary": "API Integration Dashboard",
+    "description": "Create a visual dashboard that displays all active integrations, their status, and performance metrics in real-time. This would help users quickly identify issues and optimize their integration workflows.",
+    "employeeId": "1",
+    "priority": "High",
+    "upvotes": 15,
+    "downvotes": 2,
+    "createdAt": "2025-05-15T10:30:00Z"
+  },
+  {
+    "id": "2",
+    "summary": "Automated Error Recovery",
+    "description": "Implement an AI-powered system that can automatically detect integration failures, diagnose the root cause, and attempt to resolve common issues without human intervention.",
+    "employeeId": "3",
+    "priority": "Medium",
+    "upvotes": 8,
+    "downvotes": 1,
+    "createdAt": "2025-05-16T14:45:00Z"
+  },
+  {
+    "id": "3",
+    "summary": "Custom Integration Templates",
+    "description": "Allow users to create and save custom integration templates that can be quickly deployed for similar use cases, reducing setup time for new integrations.",
+    "employeeId": "2",
+    "priority": "Low",
+    "upvotes": 12,
+    "downvotes": 0,
+    "createdAt": "2025-05-17T09:15:00Z"
+  },
+  {
+    "id": "4",
+    "summary": "Integration Analytics",
+    "description": "Provide detailed analytics on integration performance, including throughput, latency, error rates, and cost metrics to help users optimize their integration strategies.",
+    "employeeId": "5",
+    "priority": "High",
+    "upvotes": 20,
+    "downvotes": 3,
+    "createdAt": "2025-05-18T11:20:00Z"
+  },
+  {
+    "id": "5",
+    "summary": "Mobile Notifications",
+    "description": "Send real-time notifications to users' mobile devices when critical integration events occur, such as failures, performance degradation, or successful completions.",
+    "employeeId": "4",
+    "priority": "Medium",
+    "upvotes": 7,
+    "downvotes": 2,
+    "createdAt": "2025-05-19T16:30:00Z"
+  }
+]
