@@ -1,30 +1,41 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Idea } from '@/types';
 import { voteOnIdea } from '@/app/actions';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/lib/api';
 
 type ClientVoteButtonsProps = {
   idea: Idea;
 };
 
 export function ClientVoteButtons({ idea }: ClientVoteButtonsProps) {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const [isVoting, setIsVoting] = useState(false);
   
-  const handleVote = async (voteType: 'upvote' | 'downvote') => {
-    try {
+  const voteMutation = useMutation({
+    mutationFn: async (voteType: 'upvote' | 'downvote') => {
       setIsVoting(true);
-      await voteOnIdea(idea.id, voteType);
-      router.refresh();
-    } catch (error) {
+      return voteOnIdea(idea.id, voteType);
+    },
+    onSuccess: () => {
+      // Invalidate and refetch the ideas list and current idea
+      queryClient.invalidateQueries({ queryKey: queryKeys.ideas });
+      queryClient.invalidateQueries({ queryKey: queryKeys.idea(idea.id) });
+    },
+    onError: (error) => {
       console.error('Error voting on idea:', error);
       alert('Failed to vote on idea. Please try again.');
-    } finally {
+    },
+    onSettled: () => {
       setIsVoting(false);
-    }
+    },
+  });
+  
+  const handleVote = (voteType: 'upvote' | 'downvote') => {
+    voteMutation.mutate(voteType);
   };
   
   return (
@@ -34,7 +45,8 @@ export function ClientVoteButtons({ idea }: ClientVoteButtonsProps) {
         size="sm" 
         onClick={() => handleVote('upvote')}
         disabled={isVoting}
-        className="group"
+        className="group flex items-center gap-1 px-3 py-1.5"
+        aria-label="Upvote"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,19 +58,19 @@ export function ClientVoteButtons({ idea }: ClientVoteButtonsProps) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="mr-1 group-hover:text-green-600"
+          className={`${isVoting ? 'opacity-50' : 'group-hover:text-green-600'}`}
         >
-          <path d="m12 19-7-7 7-7" />
-          <path d="M19 12H5" />
+          <path d="m18 15-6-6-6 6" />
         </svg>
-        {idea.upvotes}
+        <span className="font-medium">{idea.upvotes}</span>
       </Button>
       <Button 
         variant="secondary" 
         size="sm" 
         onClick={() => handleVote('downvote')}
         disabled={isVoting}
-        className="group"
+        className="group flex items-center gap-1 px-3 py-1.5"
+        aria-label="Downvote"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,12 +82,11 @@ export function ClientVoteButtons({ idea }: ClientVoteButtonsProps) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="mr-1 group-hover:text-red-600"
+          className={`${isVoting ? 'opacity-50' : 'group-hover:text-red-600'}`}
         >
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
+          <path d="m6 9 6 6 6-6" />
         </svg>
-        {idea.downvotes}
+        <span className="font-medium">{idea.downvotes}</span>
       </Button>
     </div>
   );

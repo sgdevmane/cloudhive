@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react"
 
 type TextAreaProps = {
   id?: string;
@@ -29,7 +29,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       required = false,
       disabled = false,
       rows = 4,
-      className = '',
+      className = "",
       error,
       ...props
     },
@@ -49,8 +49,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           disabled={disabled}
           rows={rows}
           ref={ref}
-          className={`flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className} ${
-            error ? 'border-red-500' : ''
+          className={`flex w-full rounded-md border-[1px] border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className} ${
+            error ? "border-red-500" : ""
           }`}
           {...props}
         />
@@ -60,4 +60,4 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   }
 );
 
-TextArea.displayName = 'TextArea';
+TextArea.displayName = "TextArea";
