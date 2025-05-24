@@ -1,7 +1,12 @@
 export type Employee = {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  name: string; // Keeping for backward compatibility
   profileImage: string;
+  department?: string;
+  email?: string;
+  jobTitle?: string;
 };
 
 export type Priority = 'High' | 'Medium' | 'Low';
@@ -25,10 +30,15 @@ export type IdeaFormData = {
 };
 
 export type PaginationParams = {
-  page: number;
+  page: string | number;
   limit: number;
 };
 
 export type SearchParams = {
   query?: string;
 } & PaginationParams;
+
+export type IdeaWithEmployee = {
+  idea: Idea;
+  employee: Employee | null;
+};

@@ -1,52 +1,82 @@
 [
   {
     "id": "1",
+    "firstName": "Alice",
+    "lastName": "Johnson",
     "name": "Alice Johnson",
-    "profileImage": "https://randomuser.me/api/portraits/women/1.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/women/1.jpg",
+    "department": "Engineering"
   },
   {
     "id": "2",
+    "firstName": "Bob",
+    "lastName": "Smith",
     "name": "Bob Smith",
-    "profileImage": "https://randomuser.me/api/portraits/men/2.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/men/2.jpg",
+    "department": "Design"
   },
   {
     "id": "3",
+    "firstName": "Charlie",
+    "lastName": "Davis",
     "name": "Charlie Davis",
-    "profileImage": "https://randomuser.me/api/portraits/men/3.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
+    "department": "Product"
   },
   {
     "id": "4",
+    "firstName": "Danielle",
+    "lastName": "Brooks",
     "name": "Danielle Brooks",
-    "profileImage": "https://randomuser.me/api/portraits/women/4.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+    "department": "Engineering"
   },
   {
     "id": "5",
+    "firstName": "Ethan",
+    "lastName": "Parker",
     "name": "Ethan Parker",
-    "profileImage": "https://randomuser.me/api/portraits/men/5.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+    "department": "Marketing"
   },
   {
     "id": "6",
+    "firstName": "Fiona",
+    "lastName": "Mitchell",
     "name": "Fiona Mitchell",
-    "profileImage": "https://randomuser.me/api/portraits/women/6.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
+    "department": "Sales"
   },
   {
     "id": "7",
+    "firstName": "George",
+    "lastName": "Hamilton",
     "name": "George Hamilton",
-    "profileImage": "https://randomuser.me/api/portraits/men/7.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/men/7.jpg",
+    "department": "Engineering"
   },
   {
     "id": "8",
+    "firstName": "Hannah",
+    "lastName": "Lee",
     "name": "Hannah Lee",
-    "profileImage": "https://randomuser.me/api/portraits/women/8.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/women/8.jpg",
+    "department": "Design"
   },
   {
     "id": "9",
+    "firstName": "Isaac",
+    "lastName": "Thompson",
     "name": "Isaac Thompson",
-    "profileImage": "https://randomuser.me/api/portraits/men/9.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/men/9.jpg",
+    "department": "Product"
   },
   {
     "id": "10",
+    "firstName": "Jasmine",
+    "lastName": "Patel",
     "name": "Jasmine Patel",
-    "profileImage": "https://randomuser.me/api/portraits/women/10.jpg"
+    "profileImage": "https://randomuser.me/api/portraits/women/10.jpg",
+    "department": "Engineering"
   }
 ]

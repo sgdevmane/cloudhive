@@ -1,11 +1,10 @@
-import { getIdeas, getEmployees } from './actions';
-import { IdeaCard } from '@/components/IdeaCard';
-import { ClientSearchBar } from '@/components/ClientSearchBar';
-import { ClientPagination } from '@/components/ClientPagination';
-import { NewIdeaButton } from '@/components/NewIdeaButton';
-import { Button } from '@/components/ui/Button';
-import Link from 'next/link';
-import { Employee, Idea } from '@/types';
+import { ClientPagination } from "@/components/ClientPagination"
+import { ClientSearchBar } from "@/components/ClientSearchBar"
+import { IdeaCard } from "@/components/IdeaCard"
+import { NewIdeaButton } from "@/components/NewIdeaButton"
+import { SearchParams } from "@/types"
+
+import { getIdeas } from "./actions"
 
 export default async function Home({
   searchParams,
@@ -21,10 +20,7 @@ export default async function Home({
     page: currentPage,
     limit: 20,
     query: searchQuery,
-  });
-  
-  // Fetch all employees to display in idea cards
-  const employees = await getEmployees();
+  } as SearchParams);
   
   return (
     <div className="space-y-8">
@@ -35,7 +31,7 @@ export default async function Home({
             Browse and vote on feature ideas for Integration Hub
           </p>
         </div>
-        <NewIdeaButton employees={employees} />
+        <NewIdeaButton />
       </div>
       
       <div className="flex justify-center md:justify-start">
@@ -54,17 +50,18 @@ export default async function Home({
               There are no ideas yet. Be the first to submit one!
             </p>
           )}
-          <NewIdeaButton employees={employees} />
+          <NewIdeaButton />
         </div>
       ) : (
         <>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {ideas.map((idea: Idea) => {
-              const employee = employees.find((emp: Employee) => emp.id === idea.employeeId);
-              return employee ? (
-                <IdeaCard key={idea.id} idea={idea} employee={employee} />
-              ) : null;
-            })}
+            {ideas.map((idea) => (
+              <IdeaCard 
+                key={idea.id} 
+                idea={idea} 
+                employeeId={idea.employeeId}
+              />
+            ))}
           </div>
           
           {totalPages > 1 && (

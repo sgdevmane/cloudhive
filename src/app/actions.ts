@@ -2,7 +2,7 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import { Idea, IdeaFormData, Priority, SearchParams } from '@/types'
+import { Idea, IdeaFormData, SearchParams, IdeaWithEmployee, Employee } from '@/types'
 
 const IDEAS_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'ideas.json')
 const EMPLOYEES_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'employees.json')
@@ -41,7 +41,11 @@ export async function getEmployees() {
 
 // Get ideas with pagination and search
 export async function getIdeas({ page = 1, limit = 20, query = '' }: SearchParams) {
-  const ideas = await readIdeas()
+  // Convert page to number if it's a string
+  const pageNum = typeof page === 'string' ? parseInt(page, 10) : page;
+  if (isNaN(pageNum)) throw new Error('Invalid page number');
+  
+  const ideas = await readIdeas();
   
   // Filter ideas by search query if provided
   const filteredIdeas = query 
@@ -49,15 +53,15 @@ export async function getIdeas({ page = 1, limit = 20, query = '' }: SearchParam
         idea.summary.toLowerCase().includes(query.toLowerCase()) || 
         idea.description.toLowerCase().includes(query.toLowerCase())
       )
-    : ideas
+    : ideas;
   
   // Sort ideas by upvotes in descending order
-  const sortedIdeas = [...filteredIdeas].sort((a, b) => b.upvotes - a.upvotes)
+  const sortedIdeas = [...filteredIdeas].sort((a, b) => b.upvotes - a.upvotes);
   
   // Calculate pagination
-  const startIndex = (page - 1) * limit
-  const endIndex = startIndex + limit
-  const paginatedIdeas = sortedIdeas.slice(startIndex, endIndex)
+  const startIndex = (pageNum - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedIdeas = sortedIdeas.slice(startIndex, endIndex);
   
   return {
     ideas: paginatedIdeas,
@@ -67,31 +71,55 @@ export async function getIdeas({ page = 1, limit = 20, query = '' }: SearchParam
   }
 }
 
-// Get a single idea by ID
-export async function getIdeaById(id: string) {
-  const ideas = await readIdeas()
-  return ideas.find(idea => idea.id === id) || null
+// Get a single idea by ID with employee details
+export async function getIdeaById(id: string): Promise<IdeaWithEmployee | null> {
+  try {
+    const ideas = await readIdeas();
+    const employees = await getEmployees();
+    
+    const idea = ideas.find(idea => idea.id === id);
+    if (!idea) return null;
+    
+    const employee = employees.find((emp: Employee) => emp.id === idea.employeeId);
+    
+    return {
+      idea,
+      employee: employee || null
+    };
+  } catch (error) {
+    console.error('Error getting idea by ID:', error);
+    return null;
+  }
 }
 
 // Create a new idea
 export async function createIdea(formData: IdeaFormData) {
-  const ideas = await readIdeas()
-  
-  const newIdea: Idea = {
-    id: Date.now().toString(),
-    summary: formData.summary,
-    description: formData.description,
-    employeeId: formData.employeeId,
-    priority: formData.priority || 'Low',
-    upvotes: 0,
-    downvotes: 0,
-    createdAt: new Date().toISOString()
+  try {
+    const ideas = await readIdeas()
+    
+    const newIdea: Idea = {
+      id: Date.now().toString(),
+      summary: formData.summary,
+      description: formData.description,
+      employeeId: formData.employeeId,
+      priority: formData.priority || 'Low',
+      upvotes: 0,
+      downvotes: 0,
+      createdAt: new Date().toISOString()
+    }
+    
+    // Add the new idea to the beginning of the array
+    const updatedIdeas = [newIdea, ...ideas];
+    await writeIdeas(updatedIdeas);
+    
+    return { success: true, idea: newIdea };
+  } catch (error) {
+    console.error('Error creating idea:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Failed to create idea' 
+    };
   }
-  
-  const updatedIdeas = [...ideas, newIdea]
-  await writeIdeas(updatedIdeas)
-  
-  return newIdea
 }
 
 // Vote on an idea (upvote or downvote)

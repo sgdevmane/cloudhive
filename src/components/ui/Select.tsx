@@ -1,5 +1,4 @@
-import React from 'react';
-import * as RadixSelect from '@radix-ui/react-select';
+import * as RadixSelect from "@radix-ui/react-select"
 
 type SelectOption = {
   value: string;
@@ -41,7 +40,7 @@ export function Select({
       <RadixSelect.Root value={value} onValueChange={onChange} disabled={disabled}>
         <RadixSelect.Trigger
           id={id}
-          className={`flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className} ${error ? 'border-red-500' : ''}`}
+          className={`flex h-10 w-full items-center justify-between rounded-md border-[1px] border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className} ${error ? 'border-red-500' : ''}`}
         >
           <RadixSelect.Value placeholder={placeholder} />
           <RadixSelect.Icon className="ml-2">
@@ -49,16 +48,18 @@ export function Select({
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
-          <RadixSelect.Content className="overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md">
+          <RadixSelect.Content className="z-50 overflow-hidden rounded-md border-[1px] border-gray-300 bg-white shadow-lg">
             <RadixSelect.Viewport className="p-1">
               {options.map((option) => (
                 <RadixSelect.Item
                   key={option.value}
                   value={option.value}
-                  className="relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                  className="relative flex cursor-default select-none items-center rounded py-1.5 pl-8 pr-2 text-sm text-gray-900 outline-none hover:bg-gray-100 focus:bg-gray-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                 >
-                  <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>
-                  <RadixSelect.ItemIndicator className="absolute left-2 inline-flex items-center">
+                  <RadixSelect.ItemText className="block truncate">
+                    {option.label}
+                  </RadixSelect.ItemText>
+                  <RadixSelect.ItemIndicator className="absolute left-2 inline-flex items-center text-blue-600">
                     <CheckIcon />
                   </RadixSelect.ItemIndicator>
                 </RadixSelect.Item>
